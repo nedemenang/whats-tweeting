@@ -1,0 +1,38 @@
+{
+  "name": "whats-tweeting",
+  "version": "1.0.0",
+  "description": "An app that allows you view tweets from a particular geographical location",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nedemenang/whats-tweeting.git"
+  },
+  "dependencies": {
+    "bcrypt": "^3.0.1",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.4",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.18",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-watch": "^2.0.7"
+  },
+  "author": "Nnamso Edemenang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nedemenang/whats-tweeting/issues"
+  },
+  "homepage": "https://github.com/nedemenang/whats-tweeting#readme"
+}
