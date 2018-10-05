@@ -4,7 +4,8 @@
   "description": "An app that allows you view tweets from a particular geographical location",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "testServer": "NODE_ENV=test ./node_modules/.bin/mocha --compilers js:babel-core/register --timeout 10000 ./server/test/*.test.js",
+    "test": "npm run testServer"
   },
   "repository": {
     "type": "git",
@@ -27,7 +28,9 @@
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-es2015": "^6.24.1",
-    "babel-watch": "^2.0.7"
+    "babel-watch": "^2.0.7",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0"
   },
   "author": "Nnamso Edemenang",
   "license": "MIT",
