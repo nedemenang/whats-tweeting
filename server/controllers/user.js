@@ -143,7 +143,6 @@ static list(request, response, next) {
         serverError(response, error);
       });
   }
-
 };
 
 export default UserController
