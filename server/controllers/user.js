@@ -53,6 +53,22 @@ class UserController {
       });
   }
 
+  static userById(request, response, next) {
+    const { userId } = request.params
+    User.findById(userId)
+    .select('_id name email username')
+    .exec()
+    .then(user => {
+     const userData = {id: user._id,
+                name: user.name,
+                username: user.username,
+                email: user.email}
+        responseOk(response, {user: userData})
+    }).catch(error => {
+      serverError(response, error)
+    })
+  }
+
   static authenticate(request, response, next) {
     const { password, identifier } = request.body;
     User.findOne({ email: identifier }).then(user => {
@@ -114,6 +130,7 @@ static list(request, response, next) {
           count: docs.length,
           users: docs.map(doc => {
             return {
+              id: doc._id,
               name: doc.name,
               username: doc.username,
               email: doc.email

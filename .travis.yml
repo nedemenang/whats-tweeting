@@ -1,8 +1,13 @@
 language: node_js
 node_js: 
-- '6.11.2'
+  - '6.11.2'
+services:
+  - mongodb
+before_script:
+  - sleep 15
+  - mongo whats_tweeting_test --eval 'db.createUser({user:"travis",pwd:"Password1",roles:["readWrite"]});'
 before_install: 
-- travis_wait npm install
+  - travis_wait npm install
 script:
   - npm test
 sudo: false

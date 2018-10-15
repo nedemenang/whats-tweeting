@@ -4,7 +4,8 @@
   "description": "An app that allows you view tweets from a particular geographical location",
   "main": "app.js",
   "scripts": {
-    "testServer": "NODE_ENV=test ./node_modules/.bin/mocha --compilers js:babel-core/register --timeout 10000 ./server/test/*.test.js",
+    "coverage": "nyc report --reporter=lcov > coverage.lcov && codecov --token=062902bb-3494-4001-b816-af65013e81c9",
+    "testServer": "NODE_ENV=test nyc --reporter=html --reporter=text ./node_modules/.bin/mocha --compilers js:babel-core/register --timeout 10000 ./server/test/*.test.js && npm run coverage",
     "startServer": "babel-watch ./server/app.js",
     "test": "npm run testServer",
     "format": "prettier --write --single-quote --print-width=120 --parser=flow --tab-width=2 \"server/**/*.{js,jsx}\""
@@ -16,9 +17,12 @@
   "dependencies": {
     "bcrypt": "^3.0.1",
     "bcryptjs": "^2.4.3",
+    "chai-http": "^4.2.0",
     "cors": "^2.8.4",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
+    "express-validator": "^5.3.0",
+    "faker": "^4.1.0",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.2.18",
     "morgan": "^1.9.1",
@@ -33,7 +37,10 @@
     "babel-watch": "^2.0.7",
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
-    "prettier": "^1.14.3"
+    "nyc": "^13.0.1",
+    "prettier": "^1.14.3",
+    "sinon": "^6.3.5",
+    "sinon-mongoose": "^2.2.1"
   },
   "author": "Nnamso Edemenang",
   "license": "MIT",
