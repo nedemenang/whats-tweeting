@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
-
 import bcrypt from 'bcryptjs';
 import config from '../config/database';
+import Query from './query';
 
-// user schema
+const Schema = mongoose.Schema;
 
-const User = mongoose.Schema({
+const User = Schema({
     name: {
         type: String,
         required: [true, 'Please provide a name']
@@ -26,7 +26,8 @@ const User = mongoose.Schema({
     password: {
         type: String,
         required: [true, 'Please provide a password']
-    }
+    },
+    queries: [{type: Schema.Types.ObjectId, ref: 'Query'}]
 });
 
 
