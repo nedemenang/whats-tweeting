@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import config from './config/database';
 import userRoutes from './routes/users';
+import tweetRoutes from './routes/tweets';
 
 dotenv.load();
 
@@ -29,6 +30,7 @@ app.use(expressValidator());
 app.use(cors());
 
 app.use('/users', userRoutes);
+app.use('/tweets', tweetRoutes);
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 

@@ -13,26 +13,26 @@ chai.should();
 chai.use(chaiHttp);
 const expect = chai.expect;
 
-let registerDetails = {
+const registerDetails = {
     'name': faker.name.findName(),
     'email': faker.internet.email(),
     'username': faker.internet.userName(),
     'password': faker.internet.password()
   };
 
-let resetPasswordDetails = {
+const resetPasswordDetails = {
     'name': faker.name.findName(),
     'email': faker.internet.email(),
     'username': faker.internet.userName(),
     'password': faker.internet.password()
 }
 
-let resetPassword = {
+const resetPassword = {
     'email': resetPasswordDetails.email,
     'password': resetPasswordDetails.password
 }
 
-let loginDetails = {
+const loginDetails = {
     'identifier': registerDetails.email,
     'password': registerDetails.password
   }
