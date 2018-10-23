@@ -1,13 +1,7 @@
-import express from 'express';
 import User from '../models/user';
-import passport from 'passport';
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import mongoose from 'mongoose';
-import config from '../config/database';
 import {conflictError, responseCreateOk, 
     responseOk, serverError, 
-    authenticationSuccess, 
     authenticationError,
     notFoundError } from '../utils/responses';
 import CryptCompare from '../utils/cryptCompare'

@@ -9,6 +9,11 @@ class CryptCompare {
               authenticationError(response, 'Authentication failed');
             }
             if (result) {
+              const userData = {
+                name: user.name,
+                email: user.email,
+                username: user.username
+              }
               const token = jwt.sign(
                 {
                   name: user.name,
@@ -22,7 +27,8 @@ class CryptCompare {
               );
               const data = {
                 message: 'Authentication successful',
-                token
+                token,
+                user: userData
               };
               responseOk(response, data);
             } else {
