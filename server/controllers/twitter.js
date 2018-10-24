@@ -7,7 +7,7 @@ import {conflictError, responseCreateOk,
     notFoundError } from '../utils/responses';
 import { error } from 'util';
 import User from '../models/user';
-import Query from '../models/query';
+
 
 dotenv.load();
 
@@ -23,7 +23,7 @@ const tweeter = new Twit({
 
 class TwitterController {
     static getTrends(request, response, next) {
-        // console.log(request.userData)
+
         const { long, lat } = request.params;
         const { email } = request.userData;
         tweeter.get('trends/closest', { lat, long }, (err, data, res) => {
@@ -51,7 +51,7 @@ class TwitterController {
                         .exec()
                         .then(user => {
                             if (user) {
-                                const query = new Query({longitude: long, latitude: lat})
+                                const query = {longitude: long, latitude: lat}
                                 user.queries.push(query)
                                 user.save()
                             } else {
@@ -66,9 +66,9 @@ class TwitterController {
     }
 
     static searchTweets(request, response, next) {
-        const { geocode, q } = request.params;
+        const { geocode } = request.params;
         const { email } = request.userData;
-        tweeter.get('search/tweets', {geocode, q, count:100}, (error, data, res) => {
+        tweeter.get('search/tweets', { q: `geocode:${geocode}`, count:100}, (error, data, res) => {
             if(error) {
                 serverError(response, error)
             } else {
@@ -89,16 +89,18 @@ class TwitterController {
                         idString: record.id_str,
                         text: record.text,
                         user: userData,
-                        createdAt: record.created_at
+                        createdAt: record.created_at,
+                        urls: record.entities.urls
 
                       };
                     })
                   };
+                  
                   User.findOne({ email })
                   .exec()
                   .then(user => {
                       if (user) {
-                          const query = new Query({geocode, query: q})
+                          const query = {query: geocode}
                           user.queries.push(query)
                           user.save()
                       } else {
@@ -111,9 +113,9 @@ class TwitterController {
     }
 
     static searchUsers(request, response, next) {
-        const { geocode, q } = request.params;
+        const { geocode } = request.params;
         const { email } = request.userData;
-        tweeter.get('search/tweets', {geocode, q, count:100}, (error, data, res) => {
+        tweeter.get('search/tweets', {q: `geocode:${geocode}`, count:100}, (error, data, res) => {
             if(error) {
                 serverError(response, error)
             } else {
@@ -135,7 +137,7 @@ class TwitterController {
                   .exec()
                   .then(user => {
                       if (user) {
-                          const query = new Query({geocode, query: q})
+                          const query = {query: geocode}
                           user.queries.push(query)
                           user.save()
                       } else {

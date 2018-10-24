@@ -52,8 +52,8 @@ describe('Create user route', () => {
               .send(loginDetails)
               .end((err, res) => {
                 res.should.have.status(200);
-                res.body.should.have.property('token'); 
-                const token = res.body.token;
+                res.body.data.should.have.property('token'); 
+                const token = res.body.data.token;
                 chai.request(app)
                   .get('/users')
                   .set('authorization', `Bearer ${token}`)
@@ -237,8 +237,8 @@ describe('Create user route', () => {
               .send(resetPassword)
               .end((err, res) => {
                 res.should.have.status(200);
-                res.body.should.have.property('message'); 
-                res.body.message.should
+                res.body.data.should.have.property('message'); 
+                res.body.data.message.should
                     .equal('user sucessfully updated');
                 done();
               });
@@ -253,21 +253,21 @@ describe ('Get single user route', () => {
         .send(loginDetails)
         .end((err, res) => { 
           res.should.have.status(200);
-          const token = res.body.token;   
+          const token = res.body.data.token;   
           chai.request(app)
             .get('/users')
             .set('authorization', `Bearer ${token}`)
             .end((err, res) => {
               res.should.have.status(200);
-              const user = res.body.users[1];
+              const user = res.body.data.users[1];
               chai.request(app)
                 .get(`/users/${user.id}`)
                 .set('authorization', `Bearer ${token}`)
                 .end((err, res) => {
-                  // console.log(err)
+  
                   res.should.have.status(200);
-                  res.body.should.be.an('object');
-                  res.body.user.id.should
+                  res.body.data.should.be.an('object');
+                  res.body.data.user.id.should
                        .equal(user.id);
                   done();
                  })
@@ -284,21 +284,21 @@ describe ('Delete user route', () => {
           .send(loginDetails)
           .end((err, res) => { 
             res.should.have.status(200);
-            const token = res.body.token;   
+            const token = res.body.data.token;   
             chai.request(app)
               .get('/users')
               .set('authorization', `Bearer ${token}`)
               .end((err, res) => {
                 res.should.have.status(200);
-                const user = res.body.users[0];
+                const user = res.body.data.users[0];
                 chai.request(app)
                   .delete(`/users/${user.id}`)
                   .set('authorization', `Bearer ${token}`)
                   .end((err, res) => {
                     res.should.have.status(200);
-                    res.body.should.be.an('object');
-                    res.body.should.have.property('message'); 
-                    res.body.message.should
+                    res.body.data.should.be.an('object');
+                    res.body.data.should.have.property('message'); 
+                    res.body.data.message.should
                         .equal('User deleted');
                     done();
                    })

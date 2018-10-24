@@ -1,3 +1,54 @@
-<p>
-  dashboard works!
-</p>
+<div *ngIf="lat && lng">
+
+
+<agm-map [latitude]="lat" [longitude]="lng" (mapClick)="onChooseLocation($event)">
+    <agm-marker
+    [latitude]="lat"
+    [longitude]="lng"
+    [iconUrl]="'assets/images/icons8-twitter-48.png'">
+        <agm-info-window>
+            <h3><strong>Howdy!</strong></h3>
+            <p>Searching from here!</p>
+        </agm-info-window>
+</agm-marker>
+</agm-map>
+
+
+  <div class="row">
+    <div class="col s4">
+      <ul class="collection with-header">
+        <li class="collection-header"><h4>Trends</h4></li>
+      <li class="collection-item" *ngFor="let trend of trends">
+          <a href="https://twitter.com/search?q={{trend.query}}" target="_blank">{{ trend.name }}</a><br>
+      </li>
+    </ul>
+    </div>
+    <div class="col s4">
+      <ul class="collection with-header">
+        <li class="collection-header"><h4>Tweets</h4></li>
+        <li class="collection-item" *ngFor="let tweet of tweets">
+            <img src={{tweet.user.profileImage}} alt="" class="circle">
+            <span class="title">{{ tweet.user.name }}</span> - 
+            <span class="title">@{{ tweet.user.screenName }}</span>
+            <p>{{ tweet.text }}</p><br>
+            <a href="https://twitter.com/{{tweet.user.screenName}}/status/{{tweet.idString}}" target="_blank">View Status</a><br>
+          </li>
+          </ul>
+      </div>
+
+      <div class="col s4">
+        <ul class="collection with-header">
+          <li class="collection-header"><h4>Users</h4></li>
+          <li class="collection-item" *ngFor="let user of users">
+            <img src={{user.profileImage}} alt="" class="circle">
+            <span class="title">{{ user.name }}</span>
+            <p>@{{user.screenName}}<br>
+              {{user.description}}<br>
+              {{user.location}}<br>
+              <a href="https://twitter.com/{{user.screenName}}" target="_blank">Twitter profile</a><br>
+            </p>
+          </li>
+          </ul>
+        </div>
+  </div>
+</div>

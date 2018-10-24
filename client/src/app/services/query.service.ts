@@ -4,44 +4,41 @@ import {Tweet} from '../interfaces/tweet';
 import {User} from '../interfaces/user';
 import {Trend} from '../interfaces/trend';
 import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class QueryService {
 
   authenticationToken: any
-  lat: string
-  long: string
-  geocode: string
-  q: string
 
   constructor(private http:Http) { }
 
-  getUsers(): Observable<User[]>{
+  getUsers(geocode): Observable<User[]>{
     this.loadToken()
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', `Bearer ${this.authenticationToken}`)
-    return this.http.get(`http://localhost:3000/tweets/users/${this.geocode}/${this.q}`,{headers} )
-      .map((response) => <User[]>response.json())
+    return this.http.get(`http://localhost:3000/tweets/users/${geocode}/`,{headers} )
+      .map((response) => <User[]>response.json().data.users)
   }
 
-  getTrends(): Observable<Trend[]>{
+  getTrends(lat, long): Observable<Trend[]>{
     this.loadToken()
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', `Bearer ${this.authenticationToken}`)
-    return this.http.get(`http://localhost:3000/tweets/trends/${this.lat}/${this.long}`, {headers: headers})
-      .map((response) => <Trend[]>response.json())
+    return this.http.get(`http://localhost:3000/tweets/trends/${lat}/${long}`, {headers: headers})
+      .map((response) => <Trend[]> response.json().data.trends)
   }
 
-  getTweets(): Observable<Tweet[]>{
+  
+  getTweets(geocode): Observable<Tweet[]>{
     this.loadToken()
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', `Bearer ${this.authenticationToken}`)
-    return this.http.get(`http://localhost:3000/tweets/${this.geocode}/${this.q}`, {headers: headers})
-      .map((response) => <Tweet[]>response.json())
+    return this.http.get(`http://localhost:3000/tweets/${geocode}/`, {headers: headers})
+      .map((response) => <Tweet[]>response.json().data.statuses)
   }
 
   loadToken(){

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from '../../services/authentication.service';
 import {Router} from '@angular/router';
 import {FlashMessagesService} from 'angular2-flash-messages';
-import { error } from 'util';
 
 @Component({
   selector: 'app-login',
@@ -31,15 +30,13 @@ export class LoginComponent implements OnInit {
     }
   
     this.authenticationService.authenticateUser(user).subscribe(data => {
-        console.log(data)
+        // console.log(data)
         this.authenticationService.storeUserData(data.data.token, data.data.user)
-        this.flashMessage.show("You have succesfully logged in", {
-          cssClass: 'alert-success', 
-          timeout: 5000})
         this.router.navigate(['/dashboard']);
     }, error => {
+        console.log(error)
         this.flashMessage.show(error._body, {
-        cssClass: 'alert-danger', 
+        cssClass: 'card-panel red', 
         timeout: 6000})
         this.router.navigate(['/login']);
     });

@@ -1,6 +1,6 @@
 export const authenticationError = (response, message) => response.status(401).json(message);
 
-export const serverError = (response, error) => response.status(500).json({message });
+export const serverError = (response, error) => response.status(500).json(error);
 
 export const deleteSuccess = response => response.status(204).json({});
 
