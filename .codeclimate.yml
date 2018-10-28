@@ -13,5 +13,6 @@ engines:
 ratings:
 exclude_paths:
   - node_modules/
-  - dist/
+  - public/
+  - distServer/
   - Server/test
