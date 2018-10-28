@@ -50,13 +50,14 @@ class UserController {
   static userById(request, response, next) {
     const { userId } = request.params
     User.findById(userId)
-    .select('_id name email username')
+    .select('_id name email username queries')
     .exec()
     .then(user => {
      const userData = {id: user._id,
                 name: user.name,
                 username: user.username,
-                email: user.email}
+                email: user.email,
+                queries: user.queries}
         responseOk(response, {user: userData})
     }).catch(error => {
       serverError(response, error)

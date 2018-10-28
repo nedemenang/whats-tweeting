@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
-import config from '../config/database';
-import Query from './query';
+
 
 const Schema = mongoose.Schema;
 
@@ -27,7 +25,7 @@ const User = Schema({
         type: String,
         required: [true, 'Please provide a password']
     },
-    queries: [{type: Schema.Types.ObjectId, ref: 'Query'}]
+    queries: [{latitude: String, longitude: String, query: String}]
 });
 
 

@@ -28,16 +28,20 @@ export class AuthenticationService {
   getProfile(){
     let headers = new Headers();
     this.loadToken()
-    headers.append('Authorization', this.authenticationToken)
+    const token = localStorage.getItem('id_token')
+    headers.append('Authorization', `Bearer ${token}`)
     headers.append('Content-Type', 'application/json');
-
-    return this.http.get('http://localhost:3000/users/profile', {headers: headers})
+    const userData = JSON.parse(localStorage.getItem('user'));
+    return this.http.get(`http://localhost:3000/users/${userData.id}`, {headers: headers})
       .map(res => res.json());
   }
 
   loadToken(){
     const token = localStorage.getItem('id_token');
+    const userData = localStorage.getItem('user');
     this.authenticationToken = token;
+    this.user = userData;
+
   }
 
   storeUserData(token, user) {

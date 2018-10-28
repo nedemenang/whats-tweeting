@@ -24,7 +24,7 @@ const registerDetails = {
 
     it('it should not allow you to retrieve users for a certain geocode and query if you are not logged in', (done) => { 
             chai.request(app)
-            .get('/tweets/6.528769,3.364384,5km/election')
+            .get('/tweets/6.528769,3.364384,5km')
             .end((err, res) => {
                 res.should.have.status(401);
                 res.body.message.should.equal('Authentication failed');
@@ -44,7 +44,7 @@ const registerDetails = {
 
     it('it should not allow you to retrieve tweets for a certain geocode and query if you are not logged in', (done) => { 
         chai.request(app)
-        .get('/tweets/6.528769,3.364384,5km/election')
+        .get('/tweets/6.528769,3.364384,5km')
         .end((err, res) => {
             res.should.have.status(401);
             res.body.message.should.equal('Authentication failed');
@@ -63,16 +63,16 @@ const registerDetails = {
               .send(loginDetails)
               .end((err, res) => {
                   res.should.have.status(200);
-                  res.body.should.have.property('token'); 
-                  const token = res.body.token; 
+                  res.body.data.should.have.property('token'); 
+                  const token = res.body.data.token; 
                   chai.request(app)
-                    .get('/tweets/6.528769,3.364384,5km/election')
+                    .get('/tweets/6.528769,3.364384,5km')
                     .set('authorization', `Bearer ${token}`)
                     .end((err, res) => {
                         res.should.have.status(200);
-                        res.body.should.be.an('object');
-                        res.body.statuses[0].user.should.be.an('object')
-                        res.body.statuses.should.be.an('Array')
+                        res.body.data.should.be.an('object');
+                        res.body.data.statuses[0].user.should.be.an('object')
+                        res.body.data.statuses.should.be.an('Array')
                         done();
                     })
               })
@@ -85,16 +85,16 @@ const registerDetails = {
                 .send(loginDetails)
                 .end((err, res) => {
                     res.should.have.status(200);
-                    res.body.should.have.property('token'); 
-                    const token = res.body.token; 
+                    res.body.data.should.have.property('token'); 
+                    const token = res.body.data.token; 
                     chai.request(app)
                     .get('/tweets/trends/-76.191126/43.010907')
                     .set('authorization', `Bearer ${token}`)
                     .end((err, res) => {
                         res.should.have.status(200);
-                        res.body.should.be.an('object');
-                        res.body.trends[0].should.be.an('object')
-                        res.body.trends.should.be.an('Array')
+                        res.body.data.should.be.an('object');
+                        res.body.data.trends[0].should.be.an('object')
+                        res.body.data.trends.should.be.an('Array')
                         done();
                     })
                 })
@@ -106,16 +106,16 @@ const registerDetails = {
                     .send(loginDetails)
                     .end((err, res) => {
                         res.should.have.status(200);
-                        res.body.should.have.property('token'); 
-                        const token = res.body.token; 
+                        res.body.data.should.have.property('token'); 
+                        const token = res.body.data.token; 
                         chai.request(app)
-                        .get('/tweets/users/6.528769,3.364384,5km/coding')
+                        .get('/tweets/users/6.528769,3.364384,5km')
                         .set('authorization', `Bearer ${token}`)
                         .end((err, res) => {
                             res.should.have.status(200);
-                            res.body.should.be.an('object');
-                            res.body.users[0].should.be.an('object')
-                            res.body.users.should.be.an('Array')
+                            res.body.data.should.be.an('object');
+                            res.body.data.users[0].should.be.an('object')
+                            res.body.data.users.should.be.an('Array')
                             done();
                         })
                     })

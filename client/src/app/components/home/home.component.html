@@ -1,27 +1,110 @@
 
-<main role="main" class="container">
-  <div class="jumbotron text-center">
-      <h1>WHATS TWEETING</h1>
-      <p class="lead">Welcome to whats tweeting.<br> Keeping to date with the twitterverse.</p>
-      <div>
-          <a class="btn btn-primary" [routerLink]="['/register']">Register</a>
-          <a class="btn btn-success" [routerLink]="['/login']">Login</a>
-      </div>
-    </div>
-  
-    <div class="row">
-      <div class="col-md-4">
-        <h3>Trends</h3>
-        <p>Find out what topics are trending on twitter around a particular geographical location</p>
-      </div>
-      <div class="col-md-4">
-          <h3>Tweets</h3>
-          <p>Find out what people are tweeting about around a particular geopgraphical location</p>
+  <div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <br><br>
+        <h1 class="header center white-text text-lighten-2">What's Tweeting?</h1>
+        <div class="row center">
+          <h5 class="header col s12 white-text">Stay up to date in the twitterverse...</h5>
         </div>
-  
-        <div class="col-md-4">
-            <h3>Users</h3>
-            <p>Find users tweeting around a particular geographical location </p>
-          </div>
+        <div class="row center">
+          <a [routerLinkActive]="['active']" [routerLink]="['/login']" id="download-button" class="btn-large waves-effect waves-light blue lighten-1">Get Started</a>
+        </div>
+        <br><br>
+
+      </div>
     </div>
-  </main>
+    <div class="parallax"><img src="../../../assets/images/twitter-on-phone.jpg" alt="Unsplashed background img 1"></div>
+  </div>
+
+
+  <div class="container">
+    <div class="section">
+
+      <!--   Icon Section   -->
+      <div class="row">
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">trending_up</i></h2>
+            <h5 class="center">Trends</h5>
+
+            <p class="light">Find out the trending topics around certain geographical areas. Never be left in the dark as to what demands your attention.</p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">group</i></h2>
+            <h5 class="center">Users</h5>
+
+            <p class="light">Find out active tweeter users around certain geographical locations. .</p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">network_wifi</i></h2>
+            <h5 class="center">Tweets</h5>
+
+            <p class="light">Find out what people are tweeting around certain geographical locations around the world</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="parallax-container valign-wrapper">
+    <div class="section no-pad-bot center">
+      <div class="container">
+        <div class="row center">
+          <h5 class="col s12 white-text">A way to make sense out of all the information on twitter.</h5>
+        </div>
+      </div>
+    </div>
+    <div class="parallax"><img src="../../../assets/images/twitter-location.jpg" alt="Unsplashed background img 2"></div>
+  </div>
+
+  <div class="container">
+    <div class="section">
+
+      <div class="row">
+        <div class="col s12 center">
+          <h3><i class="mdi-content-send brown-text"></i></h3>
+          <h4>Some Twitter Facts</h4>
+          <p class="left-align light">There are 330M monthly active users, with a total of 1.3 billion account created. 5% of active users access the site via mobile. 83% of the world's leaders are on twitter. There are 500 million tweets sent each day. Thats' 6,000 tweets every second. A day's worth of tweets will fill a 10 million page book.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="parallax-container valign-wrapper">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <div class="row center">
+          <h5 class="header col s12 white-text">Twitter like you've never known</h5>
+        </div>
+      </div>
+    </div>
+    <div class="parallax"><img src="../../../assets/images/twitter-user2.jpg" alt="Unsplashed background img 3"></div>
+  </div>
+
+  <footer class="page-footer blue">
+    <div class="container center">
+      <div class="row">
+        <div class="col s12">
+          <h5 class="white-text">About Me</h5>
+          <p class="grey-text text-lighten-4">Saving the world, one line of code at a time!</p>
+
+
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container center">
+      Made by <a class="brown-text text-lighten-3" href="https://github.com/nedemenang">nedemenang</a>
+      </div>
+    </div>
+  </footer>
