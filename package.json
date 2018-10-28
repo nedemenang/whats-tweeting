@@ -46,6 +46,9 @@
     "sinon": "^6.3.5",
     "sinon-mongoose": "^2.2.1"
   },
+  "engines": {
+    "node": "8.9.0"
+  },
   "author": "Nnamso Edemenang",
   "license": "MIT",
   "bugs": {
