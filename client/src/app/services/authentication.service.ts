@@ -14,14 +14,14 @@ export class AuthenticationService {
   registerUser(user) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/users/', user, {headers: headers})
+    return this.http.post('users/', user, {headers: headers})
       .map(res => res.json());
   }
 
   authenticateUser(user){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/users/login', user, {headers: headers})
+    return this.http.post('users/login', user, {headers: headers})
       .map(res => res.json());
   }
 
@@ -32,7 +32,7 @@ export class AuthenticationService {
     headers.append('Authorization', `Bearer ${token}`)
     headers.append('Content-Type', 'application/json');
     const userData = JSON.parse(localStorage.getItem('user'));
-    return this.http.get(`http://localhost:3000/users/${userData.id}`, {headers: headers})
+    return this.http.get(`users/${userData.id}`, {headers: headers})
       .map(res => res.json());
   }
 

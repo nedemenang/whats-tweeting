@@ -7,6 +7,8 @@
     "coverage": "nyc report --reporter=lcov > coverage.lcov && codecov --token=062902bb-3494-4001-b816-af65013e81c9",
     "testServer": "NODE_ENV=test nyc --reporter=html --reporter=text ./node_modules/.bin/mocha --exit --compilers js:babel-core/register --timeout 10000 ./server/test/*.test.js && npm run coverage",
     "startServer": "babel-watch ./server/app.js",
+    "start": "NODE_ENV=production node ./distServer/app.js",
+    "buildServer": "babel ./server --out-dir ./distServer --copy-files",
     "test": "npm run testServer",
     "format": "prettier --write --single-quote --print-width=120 --parser=flow --tab-width=2 \"server/**/*.{js,jsx}\""
   },
