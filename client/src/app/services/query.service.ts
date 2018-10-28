@@ -18,7 +18,7 @@ export class QueryService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', `Bearer ${this.authenticationToken}`)
-    return this.http.get(`http://localhost:3000/tweets/users/${geocode}/`,{headers} )
+    return this.http.get(`tweets/users/${geocode}/`,{headers} )
       .map((response) => <User[]>response.json().data.users)
   }
 
@@ -27,7 +27,7 @@ export class QueryService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', `Bearer ${this.authenticationToken}`)
-    return this.http.get(`http://localhost:3000/tweets/trends/${lat}/${long}`, {headers: headers})
+    return this.http.get(`tweets/trends/${lat}/${long}`, {headers: headers})
       .map((response) => <Trend[]> response.json().data.trends)
   }
 
@@ -37,7 +37,7 @@ export class QueryService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', `Bearer ${this.authenticationToken}`)
-    return this.http.get(`http://localhost:3000/tweets/${geocode}/`, {headers: headers})
+    return this.http.get(`tweets/${geocode}/`, {headers: headers})
       .map((response) => <Tweet[]>response.json().data.statuses)
   }
 
