@@ -569,7 +569,7 @@ var NavbarComponent = /** @class */ (function () {
     NavbarComponent.prototype.onLogoutClick = function () {
         this.authenticationService.logout();
         this.flashMessage.show("You are logged out", {
-            cssClass: 'alert-success',
+            cssClass: 'card-panel green',
             timeout: 3000
         });
         this.router.navigate(['/login']);
