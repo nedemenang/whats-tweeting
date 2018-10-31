@@ -65,7 +65,7 @@ app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: true }));
 app.use((0, _expressValidator2.default)());
 
-app.use(_express2.default.static(_path2.default.join(__dirname, '../public')));
+app.use(_express2.default.static(_path2.default.join(__dirname, '../client')));
 
 app.use((0, _cors2.default)());
 
@@ -82,5 +82,5 @@ exports.default = app;
 
 
 app.get('/*', function (req, res) {
-  res.sendFile(_path2.default.join(__dirname, '../public/index.html'));
+  res.sendFile(_path2.default.join(__dirname, '../client/index.html'));
 });

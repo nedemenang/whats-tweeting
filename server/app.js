@@ -30,7 +30,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressValidator());
 
-app.use(express.static(path.join(__dirname, '../public')));
+if(process.env.NODE_ENV !== "production"){
+  app.use(express.static(path.join(__dirname, '../dist/client/')));
+} else {
+  app.use(express.static(path.join(__dirname, '../client')));
+}
+
 
 app.use(cors());
 
@@ -46,5 +51,10 @@ app.listen(port, () => {
 export default app;
 
 app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/index.html'));
+  if(process.env.NODE_ENV !== "production"){
+    res.sendFile(path.join(__dirname, '../client/src/index.html'));
+  } else {
+    res.sendFile(path.join(__dirname, '../client/index.html'));
+  }
+    
 });
