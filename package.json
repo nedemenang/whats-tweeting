@@ -10,7 +10,7 @@
     "start": "NODE_ENV=production node ./dist/server/app.js",
     "buildServer": "babel ./server --out-dir ./dist/server --copy-files",
     "test": "npm run testServer",
-    "format": "prettier --write --single-quote --print-width=120 --parser=flow --tab-width=2 \"server/**/*.{js,jsx}\""
+    "format": "prettier --write --single-quote --print-width=120 --parser=flow --tab-width=2 \"server/**/*.{js}\""
   },
   "repository": {
     "type": "git",

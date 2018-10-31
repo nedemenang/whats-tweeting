@@ -14,4 +14,4 @@ ratings:
 exclude_paths:
   - node_modules/
   - dist/
-  - Server/test
+  - server/test
