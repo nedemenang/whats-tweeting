@@ -585,6 +585,7 @@ var NavbarComponent = /** @class */ (function () {
     };
     NavbarComponent.prototype.onLogoutClick = function () {
         this.authenticationService.logout();
+        this.userService.changeUser(null);
         this.router.navigate(['/login']);
         return false;
     };
