@@ -1,10 +1,11 @@
 
 <nav class="blue" role="navigation">
+    
     <div class="nav-wrapper container">
       <a href="#">
           <img src="../../../assets/images/white-tweeter.png" alt="Smiley face" height="30" width="32">
       </a>
-        <a class="navbar-brand" style="font-display: blue; font-size: 25px;" id="tweeting" href="#">Whats Tweeting?</a>
+      <span *ngIf="user" style="font-size:25px; font-weight: bold">Hi {{user.name}}!</span> 
       <ul class="right hide-on-med-and-down">
           <li *ngIf="authenticationService.loggedIn()" class="nav-item active" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
               <a class="nav-link" [routerLinkActive]="['active']" [routerLink]="['/dashboard']">Dashboard</a>
@@ -20,10 +21,11 @@
                 <a class="nav-link" [routerLinkActive]="['active']" (click)="onLogoutClick()" >Logout</a>
               </li>
       </ul>
-
+      
       <ul id="nav-mobile" class="sidenav">
         <li><a href="#">Navbar Link</a></li>
       </ul>
       <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     </div>
+    
   </nav>

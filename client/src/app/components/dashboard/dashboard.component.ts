@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { last } from '@angular/router/src/utils/collection';
 import {QueryService} from '../../services/query.service';
-import { getParentInjectorLocation } from '@angular/core/src/render3/di';
 import {Router} from '@angular/router';
 import {FlashMessagesService} from 'angular2-flash-messages';
-import * as lodash from 'lodash'
+import * as lodash from 'lodash';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,9 +13,10 @@ export class DashboardComponent implements OnInit {
   
   lat: number = 6.51873660071218;
   lng: number = 3.3731851104219004;
-  q: string = "KabirSingh"
+  user: any 
   geocode: string = ""
   searchRadius = 5
+  zoom: number = 8;
   locationChosen : boolean = false
   trends : any
   users: any
@@ -30,7 +29,10 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    
     this.getUserLocation()
+    this.getQueries(this.lat, this.lng)
+    this.user = localStorage.getItem("user")
   }
 
   private getUserLocation() {
@@ -42,10 +44,9 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  onChooseLocation(event){
-    this.lat = event.coords.lat;
-    this.lng = event.coords.lng
-    this.locationChosen = true;
+  private getQueries(lat, lng) {
+    this.lat = lat;
+    this.lng = lng
     this.geocode = this.lat + ','+ this.lng +','+ this.searchRadius + "km"
     this.queryService.getTrends(this.lat, this.lng).subscribe(data => {
       this.trends = data
@@ -73,6 +74,13 @@ export class DashboardComponent implements OnInit {
         timeout: 6000})
         this.router.navigate(['/dashboard']);
     });
+  }
+
+  onChooseLocation(event){
+    this.lat = event.coords.lat;
+    this.lng = event.coords.lng
+    this.getQueries(event.coords.lat, event.coords.lng)
+    this.locationChosen = true;
   }
 
 }
