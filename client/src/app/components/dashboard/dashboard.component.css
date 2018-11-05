@@ -3,3 +3,39 @@
 agm-map {
     height: 500px;
   }
+
+  @media only screen and (max-width: 970px) {
+    .row .col.s4 {
+      width: 100%;
+      margin-left: auto;
+      margin-bottom: 20px;
+      left: auto;
+      right: auto;
+      height: 1000px;
+      overflow: scroll;
+    }
+  }
+  
+  @media only screen and (max-width: 670px) {
+    .row .col.s4 {
+      width: 100%;
+      margin-left: auto;
+      margin-bottom: 20px;
+      left: auto;
+      right: auto;
+      height: 1000px;
+      overflow: scroll;
+    }
+  }
+  
+  @media only screen and (max-width: 270px) {
+    .row .col.s4 {
+      width: 100%;
+      margin-left: auto;
+      margin-bottom: 20px;
+      left: auto;
+      right: auto;
+      height: 1000px;
+      overflow: scroll;
+    }
+  }
