@@ -1,6 +1,4 @@
 <div *ngIf="lat && lng">
-
-
 <agm-map [latitude]="lat" [longitude]="lng" (mapClick)="onChooseLocation($event)">
     <agm-marker
     [latitude]="lat"
@@ -8,7 +6,7 @@
     [iconUrl]="'assets/images/icons8-twitter-48.png'">
         <agm-info-window>
             <h3><strong>Howdy!</strong></h3>
-            <p>Searching from here!</p>
+            <p>Click anywhere to search from!</p>
         </agm-info-window>
 </agm-marker>
 </agm-map>

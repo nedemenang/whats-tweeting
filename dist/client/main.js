@@ -241,7 +241,7 @@ module.exports = "\n\nagm-map {\n    height: 500px;\n  }\n/*# sourceMappingURL=d
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"lat && lng\">\n\n\n<agm-map [latitude]=\"lat\" [longitude]=\"lng\" (mapClick)=\"onChooseLocation($event)\">\n    <agm-marker\n    [latitude]=\"lat\"\n    [longitude]=\"lng\"\n    [iconUrl]=\"'assets/images/icons8-twitter-48.png'\">\n        <agm-info-window>\n            <h3><strong>Howdy!</strong></h3>\n            <p>Searching from here!</p>\n        </agm-info-window>\n</agm-marker>\n</agm-map>\n\n\n  <div class=\"row\">\n    <div class=\"col s4\">\n      <ul class=\"collection with-header\">\n        <li class=\"collection-header\"><h4>Trends</h4></li>\n      <li class=\"collection-item\" *ngFor=\"let trend of trends\">\n          <a href=\"https://twitter.com/search?q={{trend.query}}\" target=\"_blank\">{{ trend.name }}</a><br>\n      </li>\n    </ul>\n    </div>\n    <div class=\"col s4\">\n      <ul class=\"collection with-header\">\n        <li class=\"collection-header\"><h4>Tweets</h4></li>\n        <li class=\"collection-item\" *ngFor=\"let tweet of tweets\">\n            <img src={{tweet.user.profileImage}} alt=\"\" class=\"circle\">\n            <span class=\"title\">{{ tweet.user.name }}</span> - \n            <span class=\"title\">@{{ tweet.user.screenName }}</span>\n            <p>{{ tweet.text }}</p><br>\n            <a href=\"https://twitter.com/{{tweet.user.screenName}}/status/{{tweet.idString}}\" target=\"_blank\">View Status</a><br>\n          </li>\n          </ul>\n      </div>\n\n      <div class=\"col s4\">\n        <ul class=\"collection with-header\">\n          <li class=\"collection-header\"><h4>Users</h4></li>\n          <li class=\"collection-item\" *ngFor=\"let user of users\">\n            <img src={{user.profileImage}} alt=\"\" class=\"circle\">\n            <span class=\"title\">{{ user.name }}</span>\n            <p>@{{user.screenName}}<br>\n              {{user.description}}<br>\n              {{user.location}}<br>\n              <a href=\"https://twitter.com/{{user.screenName}}\" target=\"_blank\">Twitter profile</a><br>\n            </p>\n          </li>\n          </ul>\n        </div>\n  </div>\n</div>"
+module.exports = "<div *ngIf=\"lat && lng\">\n<agm-map [latitude]=\"lat\" [longitude]=\"lng\" (mapClick)=\"onChooseLocation($event)\">\n    <agm-marker\n    [latitude]=\"lat\"\n    [longitude]=\"lng\"\n    [iconUrl]=\"'assets/images/icons8-twitter-48.png'\">\n        <agm-info-window>\n            <h3><strong>Howdy!</strong></h3>\n            <p>Click anywhere to search from!</p>\n        </agm-info-window>\n</agm-marker>\n</agm-map>\n\n\n  <div class=\"row\">\n    <div class=\"col s4\">\n      <ul class=\"collection with-header\">\n        <li class=\"collection-header\"><h4>Trends</h4></li>\n      <li class=\"collection-item\" *ngFor=\"let trend of trends\">\n          <a href=\"https://twitter.com/search?q={{trend.query}}\" target=\"_blank\">{{ trend.name }}</a><br>\n      </li>\n    </ul>\n    </div>\n    <div class=\"col s4\">\n      <ul class=\"collection with-header\">\n        <li class=\"collection-header\"><h4>Tweets</h4></li>\n        <li class=\"collection-item\" *ngFor=\"let tweet of tweets\">\n            <img src={{tweet.user.profileImage}} alt=\"\" class=\"circle\">\n            <span class=\"title\">{{ tweet.user.name }}</span> - \n            <span class=\"title\">@{{ tweet.user.screenName }}</span>\n            <p>{{ tweet.text }}</p><br>\n            <a href=\"https://twitter.com/{{tweet.user.screenName}}/status/{{tweet.idString}}\" target=\"_blank\">View Status</a><br>\n          </li>\n          </ul>\n      </div>\n\n      <div class=\"col s4\">\n        <ul class=\"collection with-header\">\n          <li class=\"collection-header\"><h4>Users</h4></li>\n          <li class=\"collection-item\" *ngFor=\"let user of users\">\n            <img src={{user.profileImage}} alt=\"\" class=\"circle\">\n            <span class=\"title\">{{ user.name }}</span>\n            <p>@{{user.screenName}}<br>\n              {{user.description}}<br>\n              {{user.location}}<br>\n              <a href=\"https://twitter.com/{{user.screenName}}\" target=\"_blank\">Twitter profile</a><br>\n            </p>\n          </li>\n          </ul>\n        </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -283,13 +283,15 @@ var DashboardComponent = /** @class */ (function () {
         this.flashMessage = flashMessage;
         this.lat = 6.51873660071218;
         this.lng = 3.3731851104219004;
-        this.q = "KabirSingh";
         this.geocode = "";
         this.searchRadius = 5;
+        this.zoom = 8;
         this.locationChosen = false;
     }
     DashboardComponent.prototype.ngOnInit = function () {
         this.getUserLocation();
+        this.getQueries(this.lat, this.lng);
+        this.user = localStorage.getItem("user");
     };
     DashboardComponent.prototype.getUserLocation = function () {
         var _this = this;
@@ -300,11 +302,10 @@ var DashboardComponent = /** @class */ (function () {
             });
         }
     };
-    DashboardComponent.prototype.onChooseLocation = function (event) {
+    DashboardComponent.prototype.getQueries = function (lat, lng) {
         var _this = this;
-        this.lat = event.coords.lat;
-        this.lng = event.coords.lng;
-        this.locationChosen = true;
+        this.lat = lat;
+        this.lng = lng;
         this.geocode = this.lat + ',' + this.lng + ',' + this.searchRadius + "km";
         this.queryService.getTrends(this.lat, this.lng).subscribe(function (data) {
             _this.trends = data;
@@ -333,6 +334,12 @@ var DashboardComponent = /** @class */ (function () {
             });
             _this.router.navigate(['/dashboard']);
         });
+    };
+    DashboardComponent.prototype.onChooseLocation = function (event) {
+        this.lat = event.coords.lat;
+        this.lng = event.coords.lng;
+        this.getQueries(event.coords.lat, event.coords.lng);
+        this.locationChosen = true;
     };
     DashboardComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -448,9 +455,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginComponent", function() { return LoginComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/authentication.service */ "./src/app/services/authentication.service.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var angular2_flash_messages__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! angular2-flash-messages */ "./node_modules/angular2-flash-messages/module/index.js");
-/* harmony import */ var angular2_flash_messages__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(angular2_flash_messages__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _services_user_shared_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/user-shared.service */ "./src/app/services/user-shared.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var angular2_flash_messages__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! angular2-flash-messages */ "./node_modules/angular2-flash-messages/module/index.js");
+/* harmony import */ var angular2_flash_messages__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(angular2_flash_messages__WEBPACK_IMPORTED_MODULE_4__);
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -464,13 +472,17 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var LoginComponent = /** @class */ (function () {
-    function LoginComponent(authenticationService, router, flashMessage) {
+    function LoginComponent(authenticationService, router, flashMessage, userService) {
         this.authenticationService = authenticationService;
         this.router = router;
         this.flashMessage = flashMessage;
+        this.userService = userService;
     }
     LoginComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.userService.currentUSer.subscribe(function (user) { return _this.user = user; });
     };
     LoginComponent.prototype.onLoginSubmit = function () {
         var _this = this;
@@ -479,11 +491,14 @@ var LoginComponent = /** @class */ (function () {
             password: this.password
         };
         this.authenticationService.authenticateUser(user).subscribe(function (data) {
-            // console.log(data)
             _this.authenticationService.storeUserData(data.data.token, data.data.user);
+            _this.userService.changeUser(data.data.user);
+            _this.flashMessage.show("Welcome. Click anywhere on the map to search from!", {
+                cssClass: 'card-panel blue white-text',
+                timeout: 6000
+            });
             _this.router.navigate(['/dashboard']);
         }, function (error) {
-            console.log(error);
             _this.flashMessage.show(error._body, {
                 cssClass: 'card-panel red',
                 timeout: 6000
@@ -498,8 +513,9 @@ var LoginComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./login.component.css */ "./src/app/components/login/login.component.css")]
         }),
         __metadata("design:paramtypes", [_services_authentication_service__WEBPACK_IMPORTED_MODULE_1__["AuthenticationService"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"],
-            angular2_flash_messages__WEBPACK_IMPORTED_MODULE_3__["FlashMessagesService"]])
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"],
+            angular2_flash_messages__WEBPACK_IMPORTED_MODULE_4__["FlashMessagesService"],
+            _services_user_shared_service__WEBPACK_IMPORTED_MODULE_2__["UserSharedService"]])
     ], LoginComponent);
     return LoginComponent;
 }());
@@ -526,7 +542,7 @@ module.exports = "img {\n        margin-top: 10px;\n        margin-right: 10px;\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<nav class=\"blue\" role=\"navigation\">\n    <div class=\"nav-wrapper container\">\n      <a href=\"#\">\n          <img src=\"../../../assets/images/white-tweeter.png\" alt=\"Smiley face\" height=\"30\" width=\"32\">\n      </a>\n        <a class=\"navbar-brand\" style=\"font-display: blue; font-size: 25px;\" id=\"tweeting\" href=\"#\">Whats Tweeting?</a>\n      <ul class=\"right hide-on-med-and-down\">\n          <li *ngIf=\"authenticationService.loggedIn()\" class=\"nav-item active\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions] = \"{exact:true}\">\n              <a class=\"nav-link\" [routerLinkActive]=\"['active']\" [routerLink]=\"['/dashboard']\">Dashboard</a>\n            </li>\n  \n          <li *ngIf=\"!authenticationService.loggedIn()\" class=\"nav-item active\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions] = \"{exact:true}\">\n            <a class=\"nav-link\" [routerLinkActive]=\"['active']\" [routerLink]=\"['/register']\">Register</a>\n          </li>\n          <li *ngIf=\"!authenticationService.loggedIn()\" class=\"nav-item active\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions] = \"{exact:true}\">\n              <a class=\"nav-link\" [routerLinkActive]=\"['active']\" [routerLink]=\"['/login']\">Login</a>\n            </li>\n            <li *ngIf=\"authenticationService.loggedIn()\" class=\"nav-item active\">\n                <a class=\"nav-link\" [routerLinkActive]=\"['active']\" (click)=\"onLogoutClick()\" >Logout</a>\n              </li>\n      </ul>\n\n      <ul id=\"nav-mobile\" class=\"sidenav\">\n        <li><a href=\"#\">Navbar Link</a></li>\n      </ul>\n      <a href=\"#\" data-target=\"nav-mobile\" class=\"sidenav-trigger\"><i class=\"material-icons\">menu</i></a>\n    </div>\n  </nav>"
+module.exports = "\n<nav class=\"blue\" role=\"navigation\">\n    \n    <div class=\"nav-wrapper container\">\n      <a href=\"#\">\n          <img src=\"../../../assets/images/white-tweeter.png\" alt=\"Smiley face\" height=\"30\" width=\"32\">\n      </a>\n      <span *ngIf=\"user\" style=\"font-size:25px; font-weight: bold\">Hi {{user.name}}!</span> \n      <ul class=\"right hide-on-med-and-down\">\n          <li *ngIf=\"authenticationService.loggedIn()\" class=\"nav-item active\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions] = \"{exact:true}\">\n              <a class=\"nav-link\" [routerLinkActive]=\"['active']\" [routerLink]=\"['/dashboard']\">Dashboard</a>\n            </li>\n  \n          <li *ngIf=\"!authenticationService.loggedIn()\" class=\"nav-item active\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions] = \"{exact:true}\">\n            <a class=\"nav-link\" [routerLinkActive]=\"['active']\" [routerLink]=\"['/register']\">Register</a>\n          </li>\n          <li *ngIf=\"!authenticationService.loggedIn()\" class=\"nav-item active\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions] = \"{exact:true}\">\n              <a class=\"nav-link\" [routerLinkActive]=\"['active']\" [routerLink]=\"['/login']\">Login</a>\n            </li>\n            <li *ngIf=\"authenticationService.loggedIn()\" class=\"nav-item active\">\n                <a class=\"nav-link\" [routerLinkActive]=\"['active']\" (click)=\"onLogoutClick()\" >Logout</a>\n              </li>\n      </ul>\n      \n      <ul id=\"nav-mobile\" class=\"sidenav\">\n        <li><a href=\"#\">Navbar Link</a></li>\n      </ul>\n      <a href=\"#\" data-target=\"nav-mobile\" class=\"sidenav-trigger\"><i class=\"material-icons\">menu</i></a>\n    </div>\n    \n  </nav>"
 
 /***/ }),
 
@@ -542,9 +558,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NavbarComponent", function() { return NavbarComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/authentication.service */ "./src/app/services/authentication.service.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var angular2_flash_messages__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! angular2-flash-messages */ "./node_modules/angular2-flash-messages/module/index.js");
-/* harmony import */ var angular2_flash_messages__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(angular2_flash_messages__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _services_user_shared_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/user-shared.service */ "./src/app/services/user-shared.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -559,19 +574,17 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var NavbarComponent = /** @class */ (function () {
-    function NavbarComponent(authenticationService, router, flashMessage) {
+    function NavbarComponent(authenticationService, router, userService) {
         this.authenticationService = authenticationService;
         this.router = router;
-        this.flashMessage = flashMessage;
+        this.userService = userService;
     }
     NavbarComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.userService.currentUSer.subscribe(function (user) { return _this.user = user; });
     };
     NavbarComponent.prototype.onLogoutClick = function () {
         this.authenticationService.logout();
-        this.flashMessage.show("You are logged out", {
-            cssClass: 'card-panel green',
-            timeout: 3000
-        });
         this.router.navigate(['/login']);
         return false;
     };
@@ -582,8 +595,8 @@ var NavbarComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./navbar.component.css */ "./src/app/components/navbar/navbar.component.css")]
         }),
         __metadata("design:paramtypes", [_services_authentication_service__WEBPACK_IMPORTED_MODULE_1__["AuthenticationService"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"],
-            angular2_flash_messages__WEBPACK_IMPORTED_MODULE_3__["FlashMessagesService"]])
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"],
+            _services_user_shared_service__WEBPACK_IMPORTED_MODULE_2__["UserSharedService"]])
     ], NavbarComponent);
     return NavbarComponent;
 }());
@@ -979,6 +992,50 @@ var QueryService = /** @class */ (function () {
         __metadata("design:paramtypes", [_angular_http__WEBPACK_IMPORTED_MODULE_1__["Http"]])
     ], QueryService);
     return QueryService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/user-shared.service.ts":
+/*!*************************************************!*\
+  !*** ./src/app/services/user-shared.service.ts ***!
+  \*************************************************/
+/*! exports provided: UserSharedService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserSharedService", function() { return UserSharedService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var rxjs_BehaviorSubject__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/BehaviorSubject */ "./node_modules/rxjs-compat/_esm5/BehaviorSubject.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var UserSharedService = /** @class */ (function () {
+    function UserSharedService() {
+        this.userSource = new rxjs_BehaviorSubject__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"]("");
+        this.currentUSer = this.userSource.asObservable();
+    }
+    UserSharedService.prototype.changeUser = function (user) {
+        this.userSource.next(user);
+    };
+    UserSharedService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [])
+    ], UserSharedService);
+    return UserSharedService;
 }());
 
 

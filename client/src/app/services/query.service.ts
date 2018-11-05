@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Http, Response, Headers} from '@angular/http';
+import {Http, Headers} from '@angular/http';
 import {Tweet} from '../interfaces/tweet';
 import {User} from '../interfaces/user';
 import {Trend} from '../interfaces/trend';
